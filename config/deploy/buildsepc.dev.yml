@@ -1,0 +1,27 @@
+version: 0.2
+        
+phases:
+  install:
+    on-failure: ABORT 
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - echo Installing Serverless CLI
+      - npm install -g serverless@2 
+      - echo Installing npm dependencies for Notes Service
+      - npm install
+  build:
+    on-failure: ABORT 
+    commands:
+      - echo Deploying Services
+      - serverless deploy --stage dev 
+
+artifacts:
+  files:
+    - devartifacts/*
+    - location
+  name: DevEnvArtifacts
+cache:
+  paths:
+    - 'notes/node_modules/*'
+    
